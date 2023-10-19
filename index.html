@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>base of</title>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+    <div class="gamecon">
+
+        <div class="gameover"> GAME OVER</div>
+
+        <div class="hero"></div>
+
+        <div id="scoreCont">YOUR SCORE: 0</div>
+        <div class="villen villen5"></div>
+    </div>
+    <script>
+
+        score = 0;
+        cross = true;
+
+
+        audio = new Audio('music.mp3');
+        audioOver = new Audio('GameOver.mp3');
+
+
+        audioOver.play();
+setTimeout(()=>{
+    aodio.play();
+},1000);
+
+
+
+
+        document.onkeydown = function (e) {
+            console.log("key", e.keyCode)
+            if (e.keyCode == 38) {
+                hero = document.querySelector('.hero');
+                hero.classList.add('animateHero');
+                setTimeout(() => {
+                    hero.classList.remove('animateHero')
+                }, 700);
+                z
+            }
+            if (e.keyCode == 39) {
+                hero = document.querySelector('.hero');
+                heroX = parseInt(window.getComputedStyle(hero, null).getPropertyValue('left'));
+                hero.style.left = heroX + 112 + "px";
+
+            }
+            if (e.keyCode == 37) {
+                hero = document.querySelector('.hero');
+                heroX = parseInt(window.getComputedStyle(hero, null).getPropertyValue('left'));
+                hero.style.left = (heroX - 112) + "px";
+
+            }
+        }
+
+        setInterval(() => {
+            hero = document.querySelector('.hero');
+            gameOver = document.querySelector('.gameover');
+            villen = document.querySelector('.villen');
+
+            hx = parseInt(window.getComputedStyle(hero, null).getPropertyValue('left'));
+            hy = parseInt(window.getComputedStyle(hero, null).getPropertyValue('top'));
+
+            vx = parseInt(window.getComputedStyle(villen, null).getPropertyValue('left'));
+            vy = parseInt(window.getComputedStyle(villen, null).getPropertyValue('top'));
+
+            offsetX = Math.abs(hx - vx);
+            offsetY = Math.abs(hy - vy);
+            // console.log(offsetX, offsetY)
+            if (offsetX < 113 && offsetY < 52) {
+                gameOver.style.visibility = 'visible';
+                villen.classList.remove('villen5')
+
+
+                audioOver.play();
+               
+                setTimeout(() => {
+                    audioOver.puse();
+                    audio.puse();
+
+                }, 2000)
+            }
+            else if (offsetX < 75 && cross) {
+
+                score += 100;
+                ubdateScore(score);
+                cross = false;
+                setTimeout(() => {
+                    cross = true;
+
+                }, 1000);
+
+                setTimeout(() => {
+
+                    aniDur = parseFloat(window.getComputedStyle(villen, null).getPropertyValue('animation-duration'));
+                    newDur = aniDur - 0.1;
+                    villen.style.animationDuration = newDur + 's';
+                    console.log('New animation duration :', newDur)
+                }, 500);
+
+            }
+
+
+        }, 10);
+        function ubdateScore(score) {
+            scoreCont.innerHTML = "YOUR SCORE:" + score
+        }
+
+
+
+    </script>
+</body>
+
+</html>
